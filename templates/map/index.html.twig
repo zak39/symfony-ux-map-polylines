@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MapController!{% endblock %}
+
+{% block body %}
+<h1>La carte d'Alençon</h1>
+
+{{ ux_map(map, {
+    style: 'height: 600px;',
+    'data-controller': 'mymap',
+    id: 'map',
+}) }}
+
+<button>Ajouter des markers</button>
+<button>Tracer des lignes</button>
+
+{% endblock %}
