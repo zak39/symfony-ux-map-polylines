@@ -62,6 +62,14 @@ export default class extends Controller {
             if (state.getMode() === 'delete') {
               console.log('Il faut supprimer le motif');
               map.removeLayer(marker)
+              console.log('marker a supprimer', marker)
+              console.log('marker.options.id a supprimer', marker.options.id)
+              fetch(`http://localhost:8000/remove-marker/${marker.options.id}`, {
+                method: 'DELETE',
+                headers: {
+                  'content-type': 'application/json'
+                }
+              })
             }
           })
         })
