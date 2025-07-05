@@ -164,6 +164,21 @@ export default class extends Controller {
             console.log('Click sur la carte')
             // Si c'est le marker
             if (state.getMode() === 'marker') {
+              console.log('créer un marker')
+              const lat = e.latlng.lat
+              const lng = e.latlng.lng
+              const position = [lat, lng]
+              fetch(`http://localhost:8000/create-marker`, {
+                method: 'POST',
+                headers: {
+                  'content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                  title: 'test',
+                  position,
+                  infos: 'ceci est un test'
+                })
+              })
               createMarker(e.latlng);
             // Sinon si c'est le polyline
             } else if (state.getMode() === 'polyline') { 

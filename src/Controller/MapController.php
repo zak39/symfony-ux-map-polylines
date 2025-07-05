@@ -13,6 +13,7 @@ use Symfony\UX\Map\Bridge\Leaflet\LeafletOptions;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\UX\Map\Bridge\Leaflet\Option\TileLayer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 final class MapController extends AbstractController
 {
@@ -126,5 +127,26 @@ final class MapController extends AbstractController
             'message' => 'Le polyline est supprimé',
             'id' => $id,
         ]);
+    }
+
+    #[Route('/create-marker', name: 'app_map_create_marker', methods: ['POST'])]
+    public function createMarker(Request $request): Response {
+        $data = json_decode($request->getContent(), true);
+
+        $title = $data['title'];
+        $position = $data['position'];
+        $infos = $data['infos'];
+
+        $points = new Point($position[0], $position[1]);
+        $infoWindow = new InfoWindow($infos);
+
+        $marker = new Marker(
+            position: $points,
+            title: $title,
+            id: $title,
+            infoWindow: $infoWindow,
+        );
+
+        return new JsonResponse(['id' => $marker->id]);
     }
 }
